@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Calendario PAMM - Post Alexander Magnus Mortem | Sistema de Calendario Alternativo</title>
+  <meta name="description" content="Descubre el Calendario PAMM, un sistema cronológico alternativo basado en la muerte de Alejandro Magno. Convierte fechas, calcula diferencias, gestiona eventos personales y explora festividades culturales.">
+  <meta name="keywords" content="calendario PAMM, calendario alternativo, Alejandro Magno, conversor de fechas, sistema cronológico, eventos personales, festividades culturales">
+  <meta name="author" content="Calendario PAMM">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="es">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/">
+  <meta property="og:title" content="Calendario PAMM - Post Alexander Magnus Mortem">
+  <meta property="og:description" content="Un sistema de calendario alternativo con 13 meses de 28 días cada uno, basado en la muerte de Alejandro Magno.">
+  <meta property="og:image" content="https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_ES">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/">
+  <meta property="twitter:title" content="Calendario PAMM - Post Alexander Magnus Mortem">
+  <meta property="twitter:description" content="Un sistema de calendario alternativo con 13 meses de 28 días cada uno.">
+  <meta property="twitter:image" content="https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/og-image.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#c9a84c">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calendario PAMM",
+    "description": "Sistema de calendario alternativo Post Alexander Magnus Mortem con conversor de fechas y gestión de eventos",
+    "url": "https://fromyoutwohoundredyearsago-maker.github.io/calendario-pamm/",
+    "applicationCategory": "Utility",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Calendario PAMM"
+    }
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+<button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar entre modo oscuro y claro">
+  <span class="theme-icon">🌙</span>
+</button>
+<button id="auth-button" class="auth-button" aria-label="Iniciar sesión" title="Iniciar sesión">
+  <span class="auth-icon">👤</span>
+</button>
+
+<!-- Modal de Autenticación -->
+<div id="auth-modal" class="auth-modal oculto">
+  <div class="auth-modal-content">
+    <button class="auth-modal-close" aria-label="Cerrar">&times;</button>
+    
+    <!-- Tabs de Login/Registro -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+      <button class="auth-tab" data-tab="register">Registrarse</button>
+    </div>
+
+    <!-- Formulario de Login -->
+    <form id="login-form" class="auth-form">
+      <h2>Iniciar Sesión</h2>
+      <div class="auth-input-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" required placeholder="tu@email.com">
+      </div>
+      <div class="auth-input-group">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+      <p id="login-error" class="auth-error"></p>
+    </form>
+
+    <!-- Formulario de Registro -->
+    <form id="register-form" class="auth-form oculto">
+      <h2>Crear Cuenta</h2>
+      <div class="auth-input-group">
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" required placeholder="tu@email.com">
+      </div>
+      <div class="auth-input-group">
+        <label for="register-password">Contraseña (mínimo 6 caracteres)</label>
+        <input type="password" id="register-password" required minlength="6" placeholder="••••••••">
+      </div>
+      <div class="auth-input-group">
+        <label for="register-confirm-password">Confirmar Contraseña</label>
+        <input type="password" id="register-confirm-password" required minlength="6" placeholder="••••••••">
+      </div>
+      <button type="submit" class="auth-submit-btn">Crear Cuenta</button>
+      <p id="register-error" class="auth-error"></p>
+    </form>
+
+    <!-- Información de usuario logueado -->
+    <div id="user-info" class="user-info oculto">
+      <h2>Usuario</h2>
+      <p id="user-email" class="user-email"></p>
+      <button id="logout-btn" class="auth-submit-btn auth-logout-btn">Cerrar Sesión</button>
+    </div>
+  </div>
+</div>
+
+<nav id="navbar" aria-label="Navegación principal">
+  <a href="#hoy">Hoy</a>
+  <a href="#calendario">Calendario</a>
+  <a href="#busqueda">Buscar</a>
+  <a href="#conversor">Conversor</a>
+  <a href="#calculadora">Calculadora</a>
+  <a href="#eventos">Mis Eventos</a>
+  <a href="#equivalencias">Festividades</a>
+  <a href="#countdown">Cuenta atrás</a>
+  <a href="#constitucion">Constitución</a>
+</nav>
+  <header>
+    <h1>Calendario PAMM</h1>
+    <p class="subtitulo">Post Alexander Magnus Mortem</p>
+  </header>
+
+  <main id="main-content">
+
+    <section id="hoy" aria-labelledby="hoy-heading">
+      <h2 id="hoy-heading">Hoy es</h2>
+      <p id="fecha-pamm">Cargando...</p>
+    </section>
+    <section id="calendario">
+  <h2>Calendario</h2>
+
+  <div class="cal-nav">
+    <div class="cal-nav-anio">
+  <button id="btn-anio-ant" class="btn-nav">«</button>
+  <div class="cal-anio-wrapper">
+    <input type="number" id="cal-anio" min="0" max="3000">
+    <span class="cal-anio-label">PAMM</span>
+  </div>
+  <button id="btn-anio-sig" class="btn-nav">»</button>
+</div>
+    <div class="cal-nav-mes">
+      <button id="btn-mes-ant" class="btn-nav">‹</button>
+      <span id="cal-mes"></span>
+      <button id="btn-mes-sig" class="btn-nav">›</button>
+    </div>
+  </div>
+
+  <div id="cal-grid" class="cal-grid"></div>
+
+<div class="leyenda-colores">
+  <h3>Leyenda de colores</h3>
+  <p style="text-align: center; margin-bottom: 1rem; color: #8a7d65; font-size: 0.9rem;">
+    Los bordes de color en el calendario indican el tipo de festividad
+  </p>
+  <div class="leyenda-items">
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #e74c3c; border-left: 4px solid #e74c3c;"></span>
+      <span>🔴 Festividades principales</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #3498db; border-left: 4px solid #3498db;"></span>
+      <span>🔵 Días civiles/nacionales</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #9b59b6; border-left: 4px solid #9b59b6;"></span>
+      <span>🟣 Días sociales/conciencia</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #f39c12; border-left: 4px solid #f39c12;"></span>
+      <span>🟠 Eventos astronómicos</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #27ae60; border-left: 4px solid #27ae60;"></span>
+      <span>🟢 Eventos culturales</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #e67e22; border-left: 4px solid #e67e22;"></span>
+      <span>🟠 Entretenimiento</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #16a085; border-left: 4px solid #16a085;"></span>
+      <span>🔷 Ambiental</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #34495e; border-left: 4px solid #34495e;"></span>
+      <span>⚫ Histórico</span>
+    </div>
+    <div class="leyenda-item">
+      <span class="leyenda-color" style="background-color: #95a5a6; border-left: 4px solid #95a5a6;"></span>
+      <span>🔘 Comercial</span>
+    </div>
+  </div>
+</div>
+
+<div class="atajos-teclado">
+  <h3>Atajos de teclado</h3>
+  <div class="atajos-items">
+    <div class="atajo-item">
+      <kbd>←</kbd> <span>Mes anterior</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>→</kbd> <span>Mes siguiente</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>↑</kbd> <span>Año anterior</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>↓</kbd> <span>Año siguiente</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>Home</kbd> <span>Año actual</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>T</kbd> <span>Ir a hoy</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>C</kbd> <span>Ir al conversor</span>
+    </div>
+    <div class="atajo-item">
+      <kbd>H</kbd> <span>Ir al inicio</span>
+    </div>
+  </div>
+</div>
+</section>
+    <section id="conversor">
+  <h2>Conversor de fechas</h2>
+
+  <div class="conversor-form">
+    <label for="fecha-input">Introduce una fecha gregoriana:</label>
+    <input type="date" id="fecha-input">
+    <button id="btn-convertir">Convertir</button>
+  </div>
+
+  <div id="resultado" class="resultado oculto">
+  <p>Equivale a:</p>
+  <p id="resultado-pamm"></p>
+  <button id="btn-copiar">Copiar</button>
+</div>
+<hr class="separador-conversor">
+
+<div class="conversor-form">
+  <label>Introduce fecha PAMM (Año, Mes, Día):</label>
+  <div class="input-grupal">
+    <input type="number" id="pamm-anio-in" placeholder="Año">
+    <select id="pamm-mes-in">
+      <option value="1">Primus</option>
+      <option value="2">Secundus</option>
+      <option value="3">Tertius</option>
+      <option value="4">Quartus</option>
+      <option value="5">Quintus</option>
+      <option value="6">Sextus</option>
+      <option value="7">Septimus</option>
+      <option value="8">Octavus</option>
+      <option value="9">Nonus</option>
+      <option value="10">Decimus</option>
+      <option value="11">Undecimus</option>
+      <option value="12">Duodecimus</option>
+      <option value="13">Ultimus</option>
+    </select>
+    <input type="number" id="pamm-dia-in" placeholder="Día" min="1" max="30">
+  </div>
+  <button id="btn-convertir-inv">Obtener fecha Gregoriana</button>
+</div>
+
+<div id="resultado-inv" class="resultado oculto">
+  <p>Equivale al calendario civil:</p>
+  <p id="resultado-greg"></p>
+</div>
+    </section>
+
+<section id="busqueda" aria-labelledby="busqueda-heading">
+  <h2 id="busqueda-heading">Búsqueda Rápida de Fechas</h2>
+  
+  <div class="busqueda-form">
+    <div class="busqueda-input-group">
+      <input type="text" id="busqueda-input" placeholder="Buscar fecha, evento o festividad..." autocomplete="off">
+      <button id="btn-buscar" aria-label="Buscar">🔍</button>
+    </div>
+    
+    <div class="busqueda-opciones">
+      <label>
+        <input type="radio" name="tipo-busqueda" value="todo" checked>
+        Buscar en todo
+      </label>
+      <label>
+        <input type="radio" name="tipo-busqueda" value="eventos">
+        Solo eventos personales
+      </label>
+      <label>
+        <input type="radio" name="tipo-busqueda" value="festividades">
+        Solo festividades
+      </label>
+    </div>
+  </div>
+  
+  <div id="resultados-busqueda" class="resultados-busqueda oculto">
+    <h3>Resultados de la búsqueda</h3>
+    <div id="lista-resultados"></div>
+  </div>
+</section>
+
+<section id="calculadora">
+  <h2>Calculadora de Fechas PAMM</h2>
+  
+  <div class="calculadora-form">
+    <h3>Calcular diferencia entre fechas</h3>
+    
+    <div class="fechas-inputs">
+      <div class="fecha-group">
+        <label>Fecha inicial:</label>
+        <div class="input-grupal">
+          <input type="number" id="calc-anio1" placeholder="Año" min="0" max="3000">
+          <select id="calc-mes1">
+            <option value="1">Primus</option>
+            <option value="2">Secundus</option>
+            <option value="3">Tertius</option>
+            <option value="4">Quartus</option>
+            <option value="5">Quintus</option>
+            <option value="6">Sextus</option>
+            <option value="7">Septimus</option>
+            <option value="8">Octavus</option>
+            <option value="9">Nonus</option>
+            <option value="10">Decimus</option>
+            <option value="11">Undecimus</option>
+            <option value="12">Duodecimus</option>
+            <option value="13">Ultimus</option>
+          </select>
+          <input type="number" id="calc-dia1" placeholder="Día" min="1" max="30">
+        </div>
+      </div>
+      
+      <div class="fecha-group">
+        <label>Fecha final:</label>
+        <div class="input-grupal">
+          <input type="number" id="calc-anio2" placeholder="Año" min="0" max="3000">
+          <select id="calc-mes2">
+            <option value="1">Primus</option>
+            <option value="2">Secundus</option>
+            <option value="3">Tertius</option>
+            <option value="4">Quartus</option>
+            <option value="5">Quintus</option>
+            <option value="6">Sextus</option>
+            <option value="7">Septimus</option>
+            <option value="8">Octavus</option>
+            <option value="9">Nonus</option>
+            <option value="10">Decimus</option>
+            <option value="11">Undecimus</option>
+            <option value="12">Duodecimus</option>
+            <option value="13">Ultimus</option>
+          </select>
+          <input type="number" id="calc-dia2" placeholder="Día" min="1" max="30">
+        </div>
+      </div>
+    </div>
+    
+    <button id="btn-calcular-diferencia">Calcular diferencia</button>
+    
+    <div id="resultado-calculadora" class="resultado oculto">
+      <h4>Resultado:</h4>
+      <div id="dif-dias"></div>
+      <div id="dif-detalles"></div>
+    </div>
+  </div>
+  
+  <div class="calculadora-form">
+    <h3>Agregar/restar días a una fecha</h3>
+    
+    <div class="fecha-group">
+      <label>Fecha base:</label>
+      <div class="input-grupal">
+        <input type="number" id="calc-anio-base" placeholder="Año" min="0" max="3000">
+        <select id="calc-mes-base">
+          <option value="1">Primus</option>
+          <option value="2">Secundus</option>
+          <option value="3">Tertius</option>
+          <option value="4">Quartus</option>
+          <option value="5">Quintus</option>
+          <option value="6">Sextus</option>
+          <option value="7">Septimus</option>
+          <option value="8">Octavus</option>
+          <option value="9">Nonus</option>
+          <option value="10">Decimus</option>
+          <option value="11">Undecimus</option>
+          <option value="12">Duodecimus</option>
+          <option value="13">Ultimus</option>
+        </select>
+        <input type="number" id="calc-dia-base" placeholder="Día" min="1" max="30">
+      </div>
+    </div>
+    
+    <div class="operacion-group">
+      <label>Días a agregar/restar:</label>
+      <div class="operacion-inputs">
+        <input type="number" id="calc-dias" placeholder="Número de días">
+        <select id="calc-operacion">
+          <option value="sumar">Sumar días</option>
+          <option value="restar">Restar días</option>
+        </select>
+      </div>
+    </div>
+    
+    <button id="btn-calcular-fecha">Calcular fecha</button>
+    
+    <div id="resultado-fecha" class="resultado oculto">
+      <h4>Resultado:</h4>
+      <div id="fecha-resultado"></div>
+    </div>
+  </div>
+</section>
+
+<section id="eventos">
+  <h2>Mis Eventos Personales</h2>
+  
+  <div class="eventos-form">
+    <h3>Agregar nuevo evento</h3>
+    
+    <div class="evento-inputs">
+      <div class="input-grupal">
+        <input type="number" id="evento-anio" placeholder="Año" min="0" max="3000">
+        <select id="evento-mes">
+          <option value="1">Primus</option>
+          <option value="2">Secundus</option>
+          <option value="3">Tertius</option>
+          <option value="4">Quartus</option>
+          <option value="5">Quintus</option>
+          <option value="6">Sextus</option>
+          <option value="7">Septimus</option>
+          <option value="8">Octavus</option>
+          <option value="9">Nonus</option>
+          <option value="10">Decimus</option>
+          <option value="11">Undecimus</option>
+          <option value="12">Duodecimus</option>
+          <option value="13">Ultimus</option>
+        </select>
+        <input type="number" id="evento-dia" placeholder="Día" min="1" max="30">
+      </div>
+    </div>
+    
+    <div class="evento-detalles">
+      <input type="text" id="evento-nombre" placeholder="Nombre del evento" maxlength="50">
+      <select id="evento-categoria">
+        <option value="personal">🟡 Personal</option>
+        <option value="trabajo">🔵 Trabajo</option>
+        <option value="familia">🟢 Familia</option>
+        <option value="salud">🔴 Salud</option>
+        <option value="educacion">🟠 Educación</option>
+        <option value="viaje">🟣 Viaje</option>
+        <option value="otro">⚫ Otro</option>
+      </select>
+    </div>
+    
+    <div class="evento-recurrencia">
+      <label>
+        <input type="checkbox" id="evento-recurrente">
+        Evento recurrente
+      </label>
+      <div id="opciones-recurrencia" class="opciones-recurrencia oculto">
+        <select id="evento-tipo-recurrencia">
+          <option value="anual">🗓️ Anual</option>
+          <option value="mensual">📅 Mensual</option>
+          <option value="semanal">📆 Semanal</option>
+        </select>
+        <div class="recurrencia-limites">
+          <label>
+            <input type="number" id="recurrencia-max-ocurrencias" placeholder="Ocurrencias" min="1" max="100">
+            Número máximo de ocurrencias (opcional)
+          </label>
+          <label>
+            <input type="date" id="recurrencia-fecha-fin">
+            Fecha final (opcional)
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <button id="btn-agregar-evento">Agregar Evento</button>
+  </div>
+  
+  <div class="eventos-lista">
+    <h3>Mis eventos guardados</h3>
+    <div id="lista-eventos">
+      <p class="sin-eventos">No tienes eventos personales guardados. Agrega tu primer evento arriba.</p>
+    </div>
+    <div class="eventos-backup">
+      <button id="btn-exportar-eventos" class="btn-secundario">Exportar eventos</button>
+      <button id="btn-importar-eventos" class="btn-secundario">Importar eventos</button>
+      <input type="file" id="importar-archivo" accept=".json" style="display: none;">
+    </div>
+    <button id="btn-limpiar-eventos" class="btn-secundario">Limpiar todos los eventos</button>
+  </div>
+</section>
+
+<section id="equivalencias">
+  <h2>Fechas culturales en PAMM</h2>
+  <table class="tabla-equivalencias">
+    <thead>
+      <tr>
+        <th>Fecha gregoriana</th>
+        <th>Equivalente PAMM</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-cuerpo">
+    </tbody>
+  </table>
+</section>
+<section id="countdown">
+  <h2>Próximo año PAMM</h2>
+  <p class="countdown-texto">El año <span id="proximo-anio"></span> comienza en</p>
+  <div class="countdown-numero">
+    <span id="dias-restantes"></span>
+    <span class="countdown-label">días</span>
+  </div>
+</section>
+<section id="constitucion">
+  <h2>Constitución del Calendario PAMM</h2>
+
+  <article class="articulo">
+    <h3>Artículo I — Origen del sistema</h3>
+    <p>El Calendario PAMM (<em>Post Alexander Magnus Mortem</em>) toma como referencia histórica la muerte de Alejandro Magno, fijada convencionalmente el 10 de junio del año 323 a.C. Este instante se define como el día 1 del año 0 PAMM, introduciendo formalmente el concepto de año cero.</p>
+  </article>
+
+  <article class="articulo">
+    <h3>Artículo II — Estructura del año</h3>
+    <p>El año PAMM se compone de 13 meses de 28 días cada uno, dando lugar a 364 días organizados en ciclos perfectamente regulares de semanas.</p>
+    <div class="meses-grid">
+      <span>I. Primus</span><span>II. Secundus</span><span>III. Tertius</span>
+      <span>IV. Quartus</span><span>V. Quintus</span><span>VI. Sextus</span>
+      <span>VII. Septimus</span><span>VIII. Octavus</span><span>IX. Nonus</span>
+      <span>X. Decimus</span><span>XI. Undecimus</span><span>XII. Duodecimus</span>
+      <span class="mes-ultimus">XIII. Ultimus</span>
+    </div>
+  </article>
+
+  <article class="articulo">
+    <h3>Artículo III — Mes variable (Ultimus)</h3>
+    <p>El mes de Ultimus actúa como mecanismo de ajuste del calendario:</p>
+    <ul>
+      <li>En años normales: <strong>29 días</strong></li>
+      <li>En años bisiestos: <strong>30 días</strong></li>
+    </ul>
+  </article>
+
+  <article class="articulo">
+    <h3>Artículo IV — Año solar y precisión</h3>
+    <p>El sistema PAMM se ajusta al año solar medio (aprox. 365,2422 días) mediante la incorporación de años bisiestos.</p>
+    <ul>
+      <li>Año normal: <strong>365 días</strong></li>
+      <li>Año bisiesto: <strong>366 días</strong></li>
+    </ul>
+  </article>
+
+  <article class="articulo">
+    <h3>Artículo V — Regla de años bisiestos</h3>
+    <p>Un año es considerado bisiesto si cumple las siguientes condiciones:</p>
+    <ol>
+      <li>Es divisible entre 4.</li>
+      <li>No es divisible entre 100.</li>
+      <li>Excepto si también es divisible entre 400, en cuyo caso sí es bisiesto.</li>
+    </ol>
+  </article>
+
+  <article class="articulo">
+    <h3>Artículo VI — Naturaleza del sistema</h3>
+    <p>El Calendario PAMM constituye un sistema cronológico autónomo, basado en principios de regularidad matemática, coherencia estructural y referencia histórica única. Su diseño garantiza consistencia interna, estabilidad a largo plazo y convertibilidad con sistemas externos mediante transformaciones deterministas.</p>
+  </article>
+
+  <div class="disposicion-final">
+    <p>El tiempo, en el sistema PAMM, no se interpreta como una secuencia cultural arbitraria, sino como una estructura matemática derivada de un punto histórico fundacional.</p>
+  </div>
+</section>
+  </main>
+
+  <script type="module" src="script.js"></script>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registrado con éxito:', registration);
+            
+            // Verificar actualizaciones
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // Hay una nueva versión disponible
+                  if (confirm('Hay una nueva versión del Calendario PAMM. ¿Recargar para actualizar?')) {
+                    window.location.reload();
+                  }
+                }
+              });
+            });
+          })
+          .catch(error => {
+            console.error('Error registrando SW:', error);
+          });
+      });
+    }
+  </script>
+  
+  <footer>
+  <p>© <span id="footer-anio"></span> — Calendario PAMM: La medida de la gloria</p>
+</footer>
+</body>
+</html>
